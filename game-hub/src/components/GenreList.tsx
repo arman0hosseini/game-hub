@@ -5,37 +5,40 @@ import GenreSkeleton from "./GenreSkeleton";
 
 interface Props {
   onSelectedGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
-const GenreList = ({ onSelectedGenre }: Props) => {
+const GenreList = ({ onSelectedGenre, selectedGenre }: Props) => {
   const { data, isLoading } = useGenres();
   const skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
     <List.Root>
       {isLoading && skeleton.map((genre) => <GenreSkeleton key={genre} />)}
-      {data.map((genre) => (
-        <ListItem key={genre.id} paddingY={1} listStyleType={"none"}>
-          <HStack>
-            <Image
-              boxSize="32px"
-              borderRadius={8}
-              src={getCroppedImageUrl(genre.image_background)}
-            />
-            <Button
-              variant="ghost"
-              fontSize="lg"
-              flexGrow="1"
-              display="flex"
-              justifyContent="flex-start"
-              padding="5px"
-              onClick={() => onSelectedGenre(genre)}
-            >
-              {genre.name}
-            </Button>
-          </HStack>
-        </ListItem>
-      ))}
+
+      {data.map((genre) => {
+        return (
+          <ListItem key={genre.id} paddingY={1} listStyleType="none">
+            <HStack>
+              <Image
+                boxSize="32px"
+                borderRadius={8}
+                src={getCroppedImageUrl(genre.image_background)}
+              />
+              <Button
+                variant={selectedGenre?.id === genre.id ? "subtle" : "ghost"}
+                fontSize="lg"
+                fontWeight={selectedGenre?.id === genre.id ? "bold" : "normal"}
+                flexGrow="1"
+                justifyContent="flex-start"
+                onClick={() => onSelectedGenre(genre)}
+              >
+                {genre.name}
+              </Button>
+            </HStack>
+          </ListItem>
+        );
+      })}
     </List.Root>
   );
 };
