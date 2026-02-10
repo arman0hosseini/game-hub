@@ -1,15 +1,21 @@
 import { Button, HStack, Icon, Menu, Portal, Text } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa6";
 import usePlatforms from "../hooks/usePlatforms";
+import type { Platform } from "../hooks/useGames";
 
-const PlatformSelector = () => {
+interface Props {
+  onSelectedPlatform: (platform: Platform) => void;
+  selectedPlatform: Platform | null;
+}
+
+const PlatformSelector = ({ onSelectedPlatform, selectedPlatform }: Props) => {
   const { data } = usePlatforms();
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" width="250px">
           <HStack gap="2" justifyContent="center" alignItems="center">
-            <Text fontSize="lg">Platform</Text>
+            <Text fontSize="lg">{selectedPlatform?.name || "Platforms"}</Text>
             <Icon as={FaChevronDown} />
           </HStack>
         </Button>
@@ -18,7 +24,11 @@ const PlatformSelector = () => {
         <Menu.Positioner>
           <Menu.Content>
             {data.map((platform) => (
-              <Menu.Item value={platform.slug} key={platform.id}>
+              <Menu.Item
+                onClick={() => onSelectedPlatform(platform)}
+                value={platform.slug}
+                key={platform.id}
+              >
                 {platform.name}
               </Menu.Item>
             ))}
