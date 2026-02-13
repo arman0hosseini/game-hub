@@ -13,7 +13,7 @@ const GenreList = ({ onSelectedGenre, selectedGenre }: Props) => {
   const skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
-    <List.Root>
+    <List.Root marginTop="3.5rem">
       {isLoading && skeleton.map((genre) => <GenreSkeleton key={genre} />)}
 
       {data.map((genre) => {

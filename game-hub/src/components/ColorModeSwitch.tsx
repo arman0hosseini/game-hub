@@ -5,7 +5,7 @@ const ColorModeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <HStack>
+    <HStack paddingX={5}>
       <Switch.Root
         checked={colorMode === "dark"}
         onCheckedChange={toggleColorMode}
@@ -13,7 +13,7 @@ const ColorModeSwitch = () => {
       >
         <Switch.HiddenInput />
         <Switch.Control />
-        <Switch.Label>Dark Mode</Switch.Label>
+        <Switch.Label whiteSpace="nowrap">Dark Mode</Switch.Label>
       </Switch.Root>
     </HStack>
   );
